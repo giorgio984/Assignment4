@@ -20,8 +20,8 @@ extension String {
 
 struct konstants{
     static let baseURL = "https://gateway.marvel.com:443/v1/public/characters"
-    static let pukey = "dac9ba2cbe5cdeb42e12a957603110a6"
-    static let prkey = "7f6cd5de17ec10bd3dd1ef237e4b54d454ddb009"
+    static let pukey = "XXXXXXXXXXXXXXXXXXX"
+    static let prkey = "XXXXXXXXXXXXXXXXXXX"
     static let ts =  NSDate().timeIntervalSince1970
 }
 
