@@ -13,6 +13,10 @@
 		44E858FB25A908A60093D498 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44E858F925A908A60093D498 /* Main.storyboard */; };
 		44E858FD25A908A70093D498 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44E858FC25A908A70093D498 /* Assets.xcassets */; };
 		44E8590025A908A70093D498 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44E858FE25A908A70093D498 /* LaunchScreen.storyboard */; };
+		44E8590E25A916BC0093D498 /* ListaTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8590D25A916BC0093D498 /* ListaTableViewController.swift */; };
+		44E8591025A91C6B0093D498 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8590F25A91C6B0093D498 /* Character.swift */; };
+		44E8591225A92AF00093D498 /* MarvelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8591125A92AF00093D498 /* MarvelService.swift */; };
+		44E8591425A92DB20093D498 /* CharacterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8591325A92DB20093D498 /* CharacterPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		44E858FC25A908A70093D498 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44E858FF25A908A70093D498 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44E8590125A908A70093D498 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44E8590D25A916BC0093D498 /* ListaTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaTableViewController.swift; sourceTree = "<group>"; };
+		44E8590F25A91C6B0093D498 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		44E8591125A92AF00093D498 /* MarvelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelService.swift; sourceTree = "<group>"; };
+		44E8591325A92DB20093D498 /* CharacterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,10 @@
 		44E858F225A908A60093D498 /* Assignment4 */ = {
 			isa = PBXGroup;
 			children = (
+				44E8590C25A912C20093D498 /* Presenters */,
+				44E8590B25A912BE0093D498 /* Views */,
+				44E8590A25A912B70093D498 /* Models */,
+				44E8590925A9129A0093D498 /* Service */,
 				44E858F325A908A60093D498 /* AppDelegate.swift */,
 				44E858F525A908A60093D498 /* SceneDelegate.swift */,
 				44E858F725A908A60093D498 /* ViewController.swift */,
@@ -65,6 +77,38 @@
 				44E8590125A908A70093D498 /* Info.plist */,
 			);
 			path = Assignment4;
+			sourceTree = "<group>";
+		};
+		44E8590925A9129A0093D498 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				44E8591125A92AF00093D498 /* MarvelService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		44E8590A25A912B70093D498 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				44E8590F25A91C6B0093D498 /* Character.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		44E8590B25A912BE0093D498 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				44E8590D25A916BC0093D498 /* ListaTableViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		44E8590C25A912C20093D498 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				44E8591325A92DB20093D498 /* CharacterPresenter.swift */,
+			);
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +183,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				44E858F825A908A60093D498 /* ViewController.swift in Sources */,
+				44E8590E25A916BC0093D498 /* ListaTableViewController.swift in Sources */,
+				44E8591025A91C6B0093D498 /* Character.swift in Sources */,
 				44E858F425A908A60093D498 /* AppDelegate.swift in Sources */,
+				44E8591225A92AF00093D498 /* MarvelService.swift in Sources */,
 				44E858F625A908A60093D498 /* SceneDelegate.swift in Sources */,
+				44E8591425A92DB20093D498 /* CharacterPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
