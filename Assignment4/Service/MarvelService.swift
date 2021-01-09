@@ -20,25 +20,41 @@ extension String {
 
 struct konstants{
     static let baseURL = "https://gateway.marvel.com:443/v1/public/characters"
-    static let pukey = "XXXXXXXXXXXXXXXXXXX"
-    static let prkey = "XXXXXXXXXXXXXXXXXXX"
+    static let pukey = "XXXXXXXXXXXXX"
+    static let prkey = "XXXXXXXXXXXXX"
     static let ts =  NSDate().timeIntervalSince1970
+    
+    static let placeholder = "http://mobile.aws.skylabs.it/mobileassignments/marvel/placeholder.png"
 }
+
+
+//struct CharacterB: Decodable {
+//    let title: String
+//    let homepageURL: URL
+//
+//
+//    enum CodingKeys : String, CodingKey {
+//        case title
+//        case homepageURL = "home_page_url"
+//
+//    }
+//}
+
 
 class MarvelService {
     
     func getCharacters_(callBack:([Character]) -> Void) {
         // Test
-        let charactersList = [Character(name: "Name 1", description: "http://mobile.aws.skylabs.it/mobileassignments/marvel/placeholder.png"),
-                             Character(name: "Name 2", description: "http://mobile.aws.skylabs.it/mobileassignments/marvel/placeholder.png"),
-                             Character(name: "Name 3", description: "http://mobile.aws.skylabs.it/mobileassignments/marvel/placeholder.png")
-        ]
-        callBack(charactersList)
+//        let charactersList = [Character(name: "Name 1"),
+//                             Character(name: "Name 2"),
+//                             Character(name: "Name 3")
+//        ]
+//        callBack(charactersList)
     }
     
     
     
-    func getCharacters(callBack:([Character]) -> Void) {
+    func getCharacters(callBack: @escaping([Character]) -> Void) {
         // valore TimeStamp
         let timeS = String(format: "%f", konstants.ts)
         
@@ -73,24 +89,38 @@ class MarvelService {
                     print(request)
                     return
                 }
-                do {
-                    guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                        print("Error: Cannot convert data to JSON object")
-                        return
+                
+                
+                do{
+                    var characters = [Character]()
+                    let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
+                    if let dictionary = jsonResponse as? [String: Any] {
+                        //print (dictionary["data"])
+                        let dataJson = dictionary["data"] as? [String: Any]
+                        let dd = dataJson!["results"]as? [[String: Any]]
+                        dd!.forEach {
+                            let thumbnail = $0["thumbnail"] as? [String: Any]
+                            let path = thumbnail?["path"] as? String
+                            let ext = thumbnail?["extension"] as? String
+                            var avatar = path! + "." + ext!
+                            // Se non esiste l'immagine allora uso placeholder
+                            if avatar.contains("image_not_available") {
+                                avatar = konstants.placeholder
+                            }
+                            // creo l'array di supereroi marvel
+                            characters.append(Character.init(name: $0["name"] as! String, thumbnail: avatar, description: $0["description"] as! String))
+                        }
                     }
-                    guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
-                        print("Error: Cannot convert JSON object to Pretty JSON data")
-                        return
-                    }
-                    guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
-                        print("Error: Could print JSON in String")
-                        return
-                    }
-                    print(prettyPrintedJson)
-                } catch {
-                    print("Error: Trying to convert JSON data to string")
-                    return
+                    
+                    // Lo passo alla tableview
+                    callBack(characters)
+                    
+                } catch let parsingError {
+                    print("Error", parsingError)
                 }
+                
+                
+                
             }.resume()
         }
     
