@@ -30,7 +30,7 @@ class ListaTableViewCell: UITableViewCell {
 
 class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
     func loadCharacter(description: ([Character])) {
-        characters = description
+        characters.append(contentsOf: description)
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -57,7 +57,7 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
         self.searchBar.delegate = self
         
         characterPresenter.setViewDelegate(listaTableViewDelegate: self)
-        characterPresenter.allCharacters()
+        characterPresenter.allCharacters(paginationIndex: 0)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -75,6 +75,9 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListaCell", for: indexPath) as! ListaTableViewCell
+        
+        // fix per overlap durante lo scroll
+        cell.avatar.image = nil
         
         if searching {
             let character = searchedCharacter[indexPath.row]
@@ -103,6 +106,12 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
         performSegue(withIdentifier: "detailsVC", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
         self.searchBar.searchTextField.endEditing(true)
+    }
+    
+    override open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == characters.count-5 {
+            characterPresenter.allCharacters(paginationIndex: characters.count )
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

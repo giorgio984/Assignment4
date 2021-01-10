@@ -22,14 +22,14 @@ struct konstants{
     static let prkey = "7f6cd5de17ec10bd3dd1ef237e4b54d454ddb009"
     static let ts =  NSDate().timeIntervalSince1970
     
-    static let limit = "50"
+    static let limit = "20"
     static let placeholder = "http://mobile.aws.skylabs.it/mobileassignments/marvel/placeholder.png"
 }
 
 
 class MarvelService {
     
-    func getCharacters(callBack: @escaping([Character]) -> Void) {
+    func getCharacters(offset: Int, callBack: @escaping([Character]) -> Void) {
         // valore TimeStamp, lo converto in string
         let timeS = String(format: "%f", konstants.ts)
         
@@ -40,6 +40,7 @@ class MarvelService {
         components.queryItems = [
             URLQueryItem(name: "limit", value: konstants.limit),
             URLQueryItem(name: "ts", value: timeS),
+            URLQueryItem(name: "offset", value: String(offset) ),
             URLQueryItem(name: "apikey", value: konstants.pukey),
             URLQueryItem(name: "hash", value: (timeS+konstants.prkey+konstants.pukey).MD5) // md5(ts+privateKey+publicKey)
         ]
@@ -165,13 +166,13 @@ class MarvelService {
                             let price0 = "\($0["price"] ?? "")"
                             let type0 = $0["type"] as! String
                             price += price0 + "$ (" + type0 + ") "
-                            print(price)
+                            //print(price)
                         }
                         
                         //print(thumbnail)
-                        print($0["title"] as! String)
+                        //print($0["title"] as! String)
                         //print($0["description"] as! String)
-                        print("----------------------------------------")
+                        //print("----------------------------------------")
                         // creo l'array con le info sui Comics
                         comics.append(Comic.init(title: $0["title"] as! String, thumbnail: thumbnail, description: "--", pageCount: $0["pageCount"] as! Int, prices: price))
                     }

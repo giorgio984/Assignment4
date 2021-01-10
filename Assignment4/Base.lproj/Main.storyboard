@@ -16,29 +16,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJ9-G6-8Ir">
-                                <rect key="frame" x="168.5" y="328.5" width="77" height="27"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="LISTA" image="list.bullet" catalog="system"/>
-                                <connections>
-                                    <segue destination="tO2-pg-vTm" kind="show" id="I1w-ed-zBb"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXs-Xf-afR">
-                                <rect key="frame" x="157" y="521" width="101" height="27"/>
+                                <rect key="frame" x="20" y="456" width="374" height="200"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Ho2-oh-iId"/>
+                                    <constraint firstAttribute="width" constant="374" id="URw-e1-Rni"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="eEi-Q6-Wnm"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="GRIGLIA" image="square.grid.2x2.fill" catalog="system"/>
+                                <state key="normal" title="GRIGLIA"/>
+                                <state key="highlighted">
+                                    <color key="titleColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <segue destination="Oh0-gY-s3r" kind="show" id="Wc1-Qh-fD8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJ9-G6-8Ir">
+                                <rect key="frame" x="20" y="157" width="374" height="200"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="LnG-L4-zsF"/>
+                                    <constraint firstAttribute="height" constant="200" id="tWr-bm-KOa"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="wO6-de-L0w"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="LISTA"/>
+                                <state key="highlighted">
+                                    <color key="titleColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="tO2-pg-vTm" kind="show" id="I1w-ed-zBb"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="KJ9-G6-8Ir" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-106" id="6MW-my-qrX"/>
-                            <constraint firstItem="fXs-Xf-afR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="87" id="85t-f3-18V"/>
-                            <constraint firstItem="fXs-Xf-afR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DSG-NM-wIU"/>
-                            <constraint firstItem="KJ9-G6-8Ir" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="phW-Zx-sky"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KJ9-G6-8Ir" secondAttribute="trailing" constant="20" id="0s5-qn-Xuu"/>
+                            <constraint firstItem="KJ9-G6-8Ir" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="69" id="7yN-Wf-Zvj"/>
+                            <constraint firstItem="fXs-Xf-afR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="8J9-LW-PcR"/>
+                            <constraint firstItem="KJ9-G6-8Ir" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="DBQ-vh-m4O"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fXs-Xf-afR" secondAttribute="bottom" constant="206" id="DjW-hy-tGg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fXs-Xf-afR" secondAttribute="trailing" constant="20" id="KJe-1L-h2u"/>
+                            <constraint firstItem="fXs-Xf-afR" firstAttribute="top" secondItem="KJ9-G6-8Ir" secondAttribute="bottom" constant="99" id="X4P-cK-HsB"/>
+                            <constraint firstItem="fXs-Xf-afR" firstAttribute="height" secondItem="KJ9-G6-8Ir" secondAttribute="height" id="Z3A-ci-jo0"/>
+                            <constraint firstItem="fXs-Xf-afR" firstAttribute="top" secondItem="KJ9-G6-8Ir" secondAttribute="bottom" constant="99" id="jwk-ae-REr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -46,7 +69,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2463.768115942029" y="1687.5"/>
+            <point key="canvasLocation" x="2462.3188405797105" y="1687.5"/>
         </scene>
         <!--Griglia Collection View Controller-->
         <scene sceneID="ucy-pp-Y3W">
@@ -301,8 +324,4 @@
     <inferredMetricsTieBreakers>
         <segue reference="rXG-RT-fgT"/>
     </inferredMetricsTieBreakers>
-    <resources>
-        <image name="list.bullet" catalog="system" width="128" height="88"/>
-        <image name="square.grid.2x2.fill" catalog="system" width="128" height="114"/>
-    </resources>
 </document>

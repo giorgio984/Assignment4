@@ -16,8 +16,9 @@ class GrigliaCollectionViewCell: UICollectionViewCell {
 
 class GrigliaCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, GrigliaCollectionDelegate {
     func loadCharacter(description: ([Character])) {
-        characters = description
+        characters.append(contentsOf: description)
         DispatchQueue.main.async {
+            self.loaded = false
             self.collectionView.reloadData()
         }
     }
@@ -29,6 +30,9 @@ class GrigliaCollectionViewController: UICollectionViewController, UICollectionV
     var characters = [] as [Character]
     var selected:Character? = nil
     
+    //mi serve per evitare di chiamare più volte l'aggiornamento della tabella
+    var loaded = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +40,7 @@ class GrigliaCollectionViewController: UICollectionViewController, UICollectionV
         collectionView.dataSource = self
         
         characterPresenter.setViewDelegatee(grigliaCollectionDelegate: self)
-        characterPresenter.allCharactersColle()
+        characterPresenter.allCharactersColle(paginationIndex: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -52,6 +56,7 @@ class GrigliaCollectionViewController: UICollectionViewController, UICollectionV
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "grigliaCell", for: indexPath) as! GrigliaCollectionViewCell
+        cell.avatar.image = nil
         
         let character = characters[indexPath.row]
         cell.characterName?.text = character.name
@@ -67,6 +72,17 @@ class GrigliaCollectionViewController: UICollectionViewController, UICollectionV
         selected = character
         
         performSegue(withIdentifier: "detailCVC", sender: self)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.size.height {
+            if !loaded{
+                characterPresenter.allCharactersColle(paginationIndex: characters.count)
+                loaded = true
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

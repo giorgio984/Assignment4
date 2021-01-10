@@ -33,15 +33,15 @@ class CharacterPresenter {
         self.grigliaCollectionDelegate = grigliaCollectionDelegate
     }
     
-    func allCharacters(){
-        marvelService.getCharacters() { [weak self] charactersList in
+    func allCharacters(paginationIndex : Int){
+        marvelService.getCharacters(offset : paginationIndex) { [weak self] charactersList in
                 self?.listaTableViewDelegate?.loadCharacter(description: charactersList)
         }
         
     }
     
-    func allCharactersColle(){
-        marvelService.getCharacters() { [weak self] charactersList in
+    func allCharactersColle(paginationIndex : Int){
+        marvelService.getCharacters(offset : paginationIndex) { [weak self] charactersList in
                 self?.grigliaCollectionDelegate?.loadCharacter(description: charactersList)
         }
     }
