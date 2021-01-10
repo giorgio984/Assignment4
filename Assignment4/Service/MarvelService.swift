@@ -16,8 +16,6 @@ extension String {
     }
 }
 
-
-
 struct konstants{
     static let baseURL = "https://gateway.marvel.com:443/v1/public/characters"
     static let pukey = "dac9ba2cbe5cdeb42e12a957603110a6"

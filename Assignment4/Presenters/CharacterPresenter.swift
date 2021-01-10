@@ -12,9 +12,14 @@ protocol ListaTableViewDelegate: NSObjectProtocol {
     func loadCharacter(description:([Character]))
 }
 
+protocol GrigliaCollectionDelegate: NSObjectProtocol {
+    func loadCharacter(description:([Character]))
+}
+
 class CharacterPresenter {
     private let marvelService:MarvelService
     weak private var listaTableViewDelegate : ListaTableViewDelegate?
+    weak private var grigliaCollectionDelegate : GrigliaCollectionDelegate?
     
     init(marvelService:MarvelService){
         self.marvelService = marvelService
@@ -24,13 +29,21 @@ class CharacterPresenter {
         self.listaTableViewDelegate = listaTableViewDelegate
     }
     
+    func setViewDelegatee(grigliaCollectionDelegate:GrigliaCollectionDelegate?){
+        self.grigliaCollectionDelegate = grigliaCollectionDelegate
+    }
+    
     func allCharacters(){
-        
         marvelService.getCharacters() { [weak self] charactersList in
                 self?.listaTableViewDelegate?.loadCharacter(description: charactersList)
         }
         
     }
     
+    func allCharactersColle(){
+        marvelService.getCharacters() { [weak self] charactersList in
+                self?.grigliaCollectionDelegate?.loadCharacter(description: charactersList)
+        }
+    }
     
 }
