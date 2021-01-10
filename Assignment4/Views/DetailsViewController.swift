@@ -35,11 +35,12 @@ class DetailsViewController: UIViewController, UITableViewDataSource,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = name
-        self.tableView.rowHeight = 100.0
+        self.tableView.rowHeight = 150.0
         avatar.loadImge(withUrl: avatarURL)
+        if (descriptionC ?? "").isEmpty {
+            descriptionC = "Nessuna descrizione disponibile."
+        }
         descriptionList.append(descriptionC!)
-        print(descriptionC ?? "-desc-")
-        print(comicsURL ?? "-url-")
         
         comicPresenter.setViewDelegate(detailViewDelegate: self)
         comicPresenter.allComics(comicsUrl: comicsURL)
@@ -66,29 +67,49 @@ class DetailsViewController: UIViewController, UITableViewDataSource,UITableView
        
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
         
         switch(segControl.selectedSegmentIndex) {
-        case 0:
-            cell.textLabel!.text = descriptionList[indexPath.row]
-            break
-        case 1:
-            cell.textLabel!.text = comicsList[indexPath.row].title
-            break
-        default:
-            break
+            case 0:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ComicDescriptionCell
+                cell.comicDescription.text = descriptionList[indexPath.row]
+                return cell
+            case 1:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "comicCell", for: indexPath) as! ComicTableViewCell
+                cell.comicTitle.text = comicsList[indexPath.row].title
+                let imageUrl:URL = URL(string: comicsList[indexPath.row].thumbnail)!
+                cell.comicImg.loadImge(withUrl: imageUrl)
+                cell.comicPrice.text = comicsList[indexPath.row].prices
+                return cell
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+                cell.textLabel!.text = ""
+                return cell
        }
         
-       return cell
+       
         
     }
 
     @IBAction func segmentedControlActionChanged(sender: AnyObject) {
-
        tableView.reloadData()
     }
     
     
     
+    
+}
+
+
+class ComicTableViewCell: UITableViewCell {
+    @IBOutlet weak var comicImg: UIImageView!
+    @IBOutlet weak var comicTitle: UILabel!
+    @IBOutlet weak var comicPrice: UILabel!
+    
+    
+}
+
+class ComicDescriptionCell: UITableViewCell {
+    @IBOutlet weak var comicDescription: UITextView!
     
 }

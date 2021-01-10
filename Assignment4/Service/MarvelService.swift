@@ -161,14 +161,21 @@ class MarvelService {
                             thumbnail = konstants.placeholder
                         }
                         
-                        //let pri = $0["prices"] as? [String: Any]
-                        //print(pri)
-                        print(thumbnail)
+                        let priceType = $0["prices"] as? [[String: Any]]
+                        var price : String = ""
+                        priceType!.forEach{
+                            let price0 = "\($0["price"] ?? "")"
+                            let type0 = $0["type"] as! String
+                            price += price0 + "$ (" + type0 + ") "
+                            print(price)
+                        }
+                        
+                        //print(thumbnail)
                         print($0["title"] as! String)
                         //print($0["description"] as! String)
-                        
+                        print("----------------------------------------")
                         // creo l'array con le info sui Comics
-                        comics.append(Comic.init(title: $0["title"] as! String, thumbnail: thumbnail, description: "--", pageCount: $0["pageCount"] as! Int, prices: "-"))
+                        comics.append(Comic.init(title: $0["title"] as! String, thumbnail: thumbnail, description: "--", pageCount: $0["pageCount"] as! Int, prices: price))
                     }
                     
                 }
