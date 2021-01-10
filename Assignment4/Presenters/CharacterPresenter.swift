@@ -31,4 +31,6 @@ class CharacterPresenter {
         }
         
     }
+    
+    
 }

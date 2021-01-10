@@ -45,7 +45,7 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
     var searchedCharacter:[Character] = []
     
     var characters = [] as [Character]
-    
+    var selected:Character? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +91,29 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
         
         return cell
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searching {
+            let character = searchedCharacter[indexPath.row]
+            selected = character
+        } else {
+            let character = characters[indexPath.row]
+            selected = character
+        }
+        performSegue(withIdentifier: "detailsVC", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.searchBar.searchTextField.endEditing(true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailsVC" {
+            let DestViewController = segue.destination as! DetailsViewController
+            DestViewController.name = selected?.name
+            DestViewController.descriptionC = selected?.description
+            DestViewController.avatarURL = URL(string: selected!.thumbnail)!
+            DestViewController.comicsURL = selected!.comicsURL
+        }
+    }
 }
 
 extension ListaTableViewController: UISearchBarDelegate {

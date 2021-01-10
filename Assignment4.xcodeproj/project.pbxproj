@@ -17,6 +17,8 @@
 		44E8591025A91C6B0093D498 /* MarvelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8590F25A91C6B0093D498 /* MarvelModel.swift */; };
 		44E8591225A92AF00093D498 /* MarvelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8591125A92AF00093D498 /* MarvelService.swift */; };
 		44E8591425A92DB20093D498 /* CharacterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8591325A92DB20093D498 /* CharacterPresenter.swift */; };
+		44E8591625AA7B090093D498 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8591525AA7B090093D498 /* DetailsViewController.swift */; };
+		44E8591825AA93AA0093D498 /* ComicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E8591725AA93AA0093D498 /* ComicPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		44E8590F25A91C6B0093D498 /* MarvelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelModel.swift; sourceTree = "<group>"; };
 		44E8591125A92AF00093D498 /* MarvelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelService.swift; sourceTree = "<group>"; };
 		44E8591325A92DB20093D498 /* CharacterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPresenter.swift; sourceTree = "<group>"; };
+		44E8591525AA7B090093D498 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		44E8591725AA93AA0093D498 /* ComicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				44E8590D25A916BC0093D498 /* ListaTableViewController.swift */,
+				44E8591525AA7B090093D498 /* DetailsViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -107,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				44E8591325A92DB20093D498 /* CharacterPresenter.swift */,
+				44E8591725AA93AA0093D498 /* ComicPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -183,12 +189,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				44E858F825A908A60093D498 /* ViewController.swift in Sources */,
+				44E8591825AA93AA0093D498 /* ComicPresenter.swift in Sources */,
 				44E8590E25A916BC0093D498 /* ListaTableViewController.swift in Sources */,
 				44E8591025A91C6B0093D498 /* MarvelModel.swift in Sources */,
 				44E858F425A908A60093D498 /* AppDelegate.swift in Sources */,
 				44E8591225A92AF00093D498 /* MarvelService.swift in Sources */,
 				44E858F625A908A60093D498 /* SceneDelegate.swift in Sources */,
 				44E8591425A92DB20093D498 /* CharacterPresenter.swift in Sources */,
+				44E8591625AA7B090093D498 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
