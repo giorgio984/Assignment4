@@ -15,6 +15,9 @@ class GrigliaCollectionViewCell: UICollectionViewCell {
 }
 
 class GrigliaCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, GrigliaCollectionDelegate {
+    
+    @IBOutlet weak var orderButton: UIBarButtonItem!
+    
     func loadCharacter(description: ([Character])) {
         characters.append(contentsOf: description)
         DispatchQueue.main.async {
@@ -35,9 +38,23 @@ class GrigliaCollectionViewController: UICollectionViewController, UICollectionV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Griglia"
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        // SETTO IL VALORE INIZIALE DEL BUTTONITEM
+        let userDefaults = UserDefaults.standard
+        if let orderName = userDefaults.value(forKey: "orderName") {
+            if (orderName as! String == "name"){
+                orderButton.title = "ASC"
+            }
+            else{
+                orderButton.title = "DESC"
+            }
+        }
+        else {
+            orderButton.title = "ASC"
+        }
         
         characterPresenter.setViewDelegatee(grigliaCollectionDelegate: self)
         characterPresenter.allCharactersColle(paginationIndex: 0)
@@ -93,6 +110,28 @@ class GrigliaCollectionViewController: UICollectionViewController, UICollectionV
             DestViewController.avatarURL = URL(string: selected!.thumbnail)!
             DestViewController.comicsURL = selected!.comicsURL
         }
+    }
+    
+    @IBAction func changeOrder(_ sender: Any) {
+        let userDefaults = UserDefaults.standard
+        if let orderName = userDefaults.value(forKey: "orderName") {
+            
+            if (orderName as! String == "name"){
+                orderButton.title = "DESC"
+                userDefaults.setValue("-name", forKey: "orderName")
+            }
+            else{
+                orderButton.title = "ASC"
+                userDefaults.setValue("name", forKey: "orderName")
+            }
+            userDefaults.synchronize()
+        }
+        else {
+            userDefaults.setValue("name", forKey: "orderName")
+            userDefaults.synchronize()
+        }
+        characters = []
+        characterPresenter.allCharactersColle(paginationIndex: 0)
     }
     
 }

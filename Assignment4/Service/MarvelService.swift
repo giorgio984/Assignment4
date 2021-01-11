@@ -29,9 +29,19 @@ struct konstants{
 
 class MarvelService {
     
-    func getCharacters(offset: Int, callBack: @escaping([Character]) -> Void) {
+    func getCharacters(offset: Int, searchName: String, callBack: @escaping([Character]) -> Void) {
         // valore TimeStamp, lo converto in string
         let timeS = String(format: "%f", konstants.ts)
+        
+        let userDefaults = UserDefaults.standard
+        var orderName : String = ""
+        
+        if userDefaults.value(forKey: "orderName") == nil {
+            userDefaults.setValue("name", forKey: "orderName")
+            userDefaults.synchronize()
+        }
+        
+        orderName = userDefaults.value(forKey: "orderName") as! String
         
         guard var components = URLComponents(string: konstants.baseURL) else {
                 print("Error: cannot create URLCompontents")
@@ -42,8 +52,14 @@ class MarvelService {
             URLQueryItem(name: "ts", value: timeS),
             URLQueryItem(name: "offset", value: String(offset) ),
             URLQueryItem(name: "apikey", value: konstants.pukey),
+            URLQueryItem(name: "orderBy", value: orderName),
             URLQueryItem(name: "hash", value: (timeS+konstants.prkey+konstants.pukey).MD5) // md5(ts+privateKey+publicKey)
         ]
+        
+        if !searchName.isEmpty{
+            components.queryItems?.append(URLQueryItem(name: "nameStartsWith", value: searchName))
+        }
+        
         guard let url = components.url else {
             print("Error: cannot create URL")
             return
@@ -51,6 +67,7 @@ class MarvelService {
     
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+        //print(request)
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 print("Error: error calling GET")
@@ -149,6 +166,7 @@ class MarvelService {
                     
                     
                     let dataJson = dictionary["data"] as? [String: Any]
+                    
                     let dd = dataJson!["results"]as? [[String: Any]]
                     dd!.forEach {
                         let thumb = $0["thumbnail"] as? [String: Any]

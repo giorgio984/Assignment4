@@ -12,6 +12,11 @@ import UIKit
 class DetailsViewController: UIViewController, UITableViewDataSource,UITableViewDelegate, DetailsViewDelegate {
     func loadComics(description: ([Comic])) {
         comicsList = description
+        // Se non sono stati trovati fumetti inserisco placeholder.
+        if comicsList.count == 0 {
+            comicsList.append(Comic.init(title: "Nessun fumetto trovato.", thumbnail: konstants.placeholder, description: "", pageCount: 0, prices: ""))
+        }
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -76,6 +81,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource,UITableView
                 return cell
             case 1:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "comicCell", for: indexPath) as! ComicTableViewCell
+                cell.comicImg.image = nil
                 cell.comicTitle.text = comicsList[indexPath.row].title
                 let imageUrl:URL = URL(string: comicsList[indexPath.row].thumbnail)!
                 cell.comicImg.loadImge(withUrl: imageUrl)

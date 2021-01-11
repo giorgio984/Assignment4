@@ -38,11 +38,9 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet var characterLista: UITableView!
+    @IBOutlet weak var orderButton: UIBarButtonItem!
     
     private let characterPresenter = CharacterPresenter(marvelService: MarvelService())
-    
-    var searching = false
-    var searchedCharacter:[Character] = []
     
     var characters = [] as [Character]
     var selected:Character? = nil
@@ -53,11 +51,25 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
         self.tableView.dataSource = self
         
         self.tableView.rowHeight = 100.0
-
+        self.title = "Lista"
         self.searchBar.delegate = self
         
+        // SETTO IL VALORE INIZIALE DEL BUTTONITEM
+        let userDefaults = UserDefaults.standard
+        if let orderName = userDefaults.value(forKey: "orderName") {
+            if (orderName as! String == "name"){
+                orderButton.title = "ASC"
+            }
+            else{
+                orderButton.title = "DESC"
+            }
+        }
+        else {
+            orderButton.title = "ASC"
+        }
+        
         characterPresenter.setViewDelegate(listaTableViewDelegate: self)
-        characterPresenter.allCharacters(paginationIndex: 0)
+        characterPresenter.allCharacters(paginationIndex: 0, searchName: "")
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,12 +77,7 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        if searching {
-            return searchedCharacter.count
-        } else {
-            return characters.count
-        }
+        return characters.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,30 +86,19 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
         // fix per overlap durante lo scroll
         cell.avatar.image = nil
         
-        if searching {
-            let character = searchedCharacter[indexPath.row]
-            cell.characterName?.text = character.name
-            let imageUrl:URL = URL(string: character.thumbnail)!
-            cell.avatar.loadImge(withUrl: imageUrl)
-        } else {
-            let character = characters[indexPath.row]
-            cell.characterName?.text = character.name
-            let imageUrl:URL = URL(string: character.thumbnail)!
-            cell.avatar.loadImge(withUrl: imageUrl)
+        let character = characters[indexPath.row]
+        cell.characterName?.text = character.name
+        let imageUrl:URL = URL(string: character.thumbnail)!
+        cell.avatar.loadImge(withUrl: imageUrl)
             
-        }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if searching {
-            let character = searchedCharacter[indexPath.row]
-            selected = character
-        } else {
-            let character = characters[indexPath.row]
-            selected = character
-        }
+
+        let character = characters[indexPath.row]
+        selected = character
         performSegue(withIdentifier: "detailsVC", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
         self.searchBar.searchTextField.endEditing(true)
@@ -110,7 +106,7 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
     
     override open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == characters.count-5 {
-            characterPresenter.allCharacters(paginationIndex: characters.count )
+            characterPresenter.allCharacters(paginationIndex: characters.count, searchName: "" )
         }
     }
     
@@ -123,20 +119,51 @@ class ListaTableViewController: UITableViewController, ListaTableViewDelegate {
             DestViewController.comicsURL = selected!.comicsURL
         }
     }
+    
+    
+    @IBAction func changeOrder(_ sender: Any) {
+        let userDefaults = UserDefaults.standard
+        if let orderName = userDefaults.value(forKey: "orderName") {
+            
+            if (orderName as! String == "name"){
+                orderButton.title = "DESC"
+                userDefaults.setValue("-name", forKey: "orderName")
+            }
+            else{
+                orderButton.title = "ASC"
+                userDefaults.setValue("name", forKey: "orderName")
+            }
+            userDefaults.synchronize()
+        }
+        else {
+            userDefaults.setValue("name", forKey: "orderName")
+            userDefaults.synchronize()
+        }
+        characters = []
+        characterPresenter.allCharacters(paginationIndex: 0, searchName: "")
+    }
+    
+    
 }
 
 extension ListaTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchedCharacter = characters.filter{$0.name.range(of: searchText, options: [.anchored, .caseInsensitive]) != nil }
-        searching = true
-        tableView.reloadData()
+        // Cerco solo quando il nome è maggiore di 2 caratteri
+        if searchText.count > 2{
+            characters = []
+            characterPresenter.allCharacters(paginationIndex: 0, searchName: searchText )
+            
+            // PRECEDENTE IMPLEMENTAZIONE DI RICERCA, CERCA SOLO SU QUELLO CHE È STATO CARICATO IN TABELLA
+            //searchedCharacter = characters.filter{$0.name.range(of: searchText, options: [.anchored, .caseInsensitive]) != nil }
+            tableView.reloadData()
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searching = false
         searchBar.text = ""
         view.endEditing(true)
-        tableView.reloadData()
+        characters = []
+        characterPresenter.allCharacters(paginationIndex: 0, searchName: "")
     }
 }
